@@ -1,1 +1,170 @@
-<h1>Ola Projeto completo</h1>
+<!DOCTYPE html>
+<html th:replace="~{adminlte3 :: layout (~{::title}, ~{::main}, _, _)}">
+	<head>
+		<title>Formulário de Serviço</title>
+	</head>
+	<body>
+		<main>
+			<div class="row">
+				<div class="col">
+					<div class="card card-primary">
+						<div class="card-header">
+							<div class="card-title">Formulário de Serviço</div>
+						</div>
+						<div class="card-body">
+						  <form method="POST" th:object="${servico}">
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">
+									<div class="form-group">
+										<label for="nome">Nome:</label>
+										<input class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome" type="text"/>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="valorMinimo">Valor Minimo:</label>
+										<input class="form-control" id="valorMinimo" th:field="*{valorMinimo}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">
+									<div class="form-group">
+										<label for="qtdHoras">Quantidade Horas:</label>
+										<input class="form-control" id="qtdHoras" th:field="*{qtdHoras}" placeholder="Digite seu nome" type="number"/>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="porcentagem">Porcentagem Comissão:</label>
+										<input class="form-control" id="porcentagem" th:field="*{porcentagem}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">							
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="horasQuarto">Horas Quarto:</label>
+										<input class="form-control" id="horasQuarto" th:field="*{horasQuarto}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="valorQuarto">Valor Quarto:</label>
+										<input class="form-control" id="valorQuarto" th:field="*{valorQuarto}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="horasSala">Horas Sala:</label>
+										<input class="form-control" id="horasSala" th:field="*{horasSala}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="valorSala">Valor Sala:</label>
+										<input class="form-control" id="valorSala" th:field="*{valorSala}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>	
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="horasBanheiro">Horas Banheiro:</label>
+										<input class="form-control" id="horasBanheiro" th:field="*{horasBanheiro}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="valorBanheiro">Valor Banheiro:</label>
+										<input class="form-control" id="valorBanheiro" th:field="*{valorBanheiro}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>	
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="horasCozinha">Horas Cozinha:</label>
+										<input class="form-control" id="horasCozinha" th:field="*{horasCozinha}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="valorCozinha">Valor Sala:</label>
+										<input class="form-control" id="valorCozinha" th:field="*{valorCozinha}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="horasQuintal">Horas Quintal:</label>
+										<input class="form-control" id="horasQuintal" th:field="*{horasQuintal}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="valorQuintal">Valor Quintal:</label>
+										<input class="form-control" id="valorQuintal" th:field="*{valorQuintal}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="horasOutros">Horas Outros:</label>
+										<input class="form-control" id="horasOutros" th:field="*{horasOutros}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="valorOutros">Valor Outros:</label>
+										<input class="form-control" id="valorOutros" th:field="*{valorOutros}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="icon">Icones</label>
+										<select class="form-control" id="icone" th:field="*{icone}" placeholder="Selecione um icone" type="number"></select>
+										<option th:each="icone : ${icones}" th:text="${icone.nome}" th:value="${icone}"></option>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="posicao">Posição</label>
+										<input class="form-control" id="posicao" th:field="*{posicao}" placeholder="Digite um valor" type="number"/>
+									</div>
+								</div>
+							</div>
+							
+							<button type="submit" class="btn btn-success">Salvar</button>
+						  </form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

@@ -2,10 +2,12 @@ package com.starking.diarista.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.starking.diarista.core.enums.Icone;
 import com.starking.diarista.core.model.Servico;
 import com.starking.diarista.core.repositories.ServicoRepository;
 
@@ -23,4 +25,8 @@ public class ServicoController {
 		return modelAndView;
 	}
 
+	@ModelAttribute("icones")
+	public Icone[] getIcones() {
+		return Icone.values();
+	}
 }
