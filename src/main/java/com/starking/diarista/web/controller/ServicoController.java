@@ -19,18 +19,23 @@ public class ServicoController {
 	@Autowired
 	private ServicoRepository servicoRepository;
 	
+	@GetMapping
+	public ModelAndView buscarTodos() {
+		var modelAndView = new ModelAndView("admin/servico/listar");
+		return modelAndView.addObject("servicos", this.servicoRepository.findAll());
+	}
+	
 	@GetMapping("/cadastrar")
 	public ModelAndView cadastrar() {
 		var modelAndView = new ModelAndView("admin/servico/form");
-		modelAndView.addObject("servico", new Servico());
-		return modelAndView;
+		return modelAndView.addObject("servico", new Servico());
 	}
 	
 	@PostMapping("/cadastrar")
 	public String cadastrar(Servico servico) {
 		this.servicoRepository.save(servico);
 		
-		return "redirect:/admin/servicos/cadastrar";
+		return "redirect:/admin/servicos";
 	}
 
 	@ModelAttribute("icones")
