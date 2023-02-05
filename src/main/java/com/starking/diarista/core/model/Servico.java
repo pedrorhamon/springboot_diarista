@@ -3,7 +3,7 @@ package com.starking.diarista.core.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import com.starking.diarista.core.model.enums.Icone;
+import com.starking.diarista.core.enums.Icone;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.starking.diarista.core.model.enums;
+package com.starking.diarista.core.enums;
 
 public enum Icone {
 	
