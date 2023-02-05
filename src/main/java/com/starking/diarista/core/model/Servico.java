@@ -82,6 +82,7 @@ public class Servico implements Serializable {
 	@Column(name = "valor_Outros", nullable = false)
 	private BigDecimal valorOutros;
 	
+	@Column(nullable = false, length = 14)
 	@Enumerated(EnumType.STRING)
 	private Icone icone;
 	
