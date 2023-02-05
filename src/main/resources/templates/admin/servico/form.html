@@ -40,8 +40,8 @@
 								
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
-										<label for="porcentagem">Porcentagem Comissão:</label>
-										<input class="form-control" id="porcentagem" th:field="*{porcentagem}" placeholder="Digite um valor" type="number"/>
+										<label for="porcentagemComissao">Porcentagem Comissão:</label>
+										<input class="form-control" id="porcentagemComissao" th:field="*{porcentagemComissao}" placeholder="Digite um valor" type="number"/>
 									</div>
 								</div>
 							</div>
@@ -146,8 +146,9 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="icon">Icones</label>
-										<select class="form-control" id="icone" th:field="*{icone}" placeholder="Selecione um icone" type="number"></select>
-										<option th:each="icone : ${icones}" th:text="${icone.nome}" th:value="${icone}"></option>
+										<select class="form-control" id="icone" th:field="*{icone}" placeholder="Selecione um icone" >
+											<option th:each="icone : ${icones}" th:text="${icone.nome}" th:value="${icone}"></option>
+										</select>
 									</div>
 								</div>
 								
