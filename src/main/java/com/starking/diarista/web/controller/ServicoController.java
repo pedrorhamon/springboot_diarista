@@ -34,7 +34,6 @@ public class ServicoController {
 	@PostMapping("/cadastrar")
 	public String cadastrar(Servico servico) {
 		this.servicoRepository.save(servico);
-		
 		return "redirect:/admin/servicos";
 	}
 
