@@ -1,8 +1,10 @@
 package com.starking.diarista.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +36,12 @@ public class ServicoController {
 	@PostMapping("/cadastrar")
 	public String cadastrar(Servico servico) {
 		this.servicoRepository.save(servico);
+		return "redirect:/admin/servicos";
+	}
+	
+	@GetMapping("/{id}/excluir")
+	public String excluir(@PathVariable Long id) {
+		this.servicoRepository.deleteById(id);
 		return "redirect:/admin/servicos";
 	}
 
