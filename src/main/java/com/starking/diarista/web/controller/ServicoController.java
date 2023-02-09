@@ -1,6 +1,7 @@
 package com.starking.diarista.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,11 +34,11 @@ public class ServicoController {
 	@GetMapping("/cadastrar")
 	public ModelAndView cadastrar() {
 		var modelAndView = new ModelAndView("admin/servico/form");
-		return modelAndView.addObject("form", new ServicoDTO());
+		return modelAndView.addObject("servico", new ServicoDTO());
 	}
 	
 	@PostMapping("/cadastrar")
-	public String cadastrar(ServicoDTO servicoDto) {
+	public String cadastrar(@Validated ServicoDTO servicoDto) {
 		var servico = servicoMapper.toModel(servicoDto);
 		this.servicoRepository.save(servico);
 		return "redirect:/admin/servicos";
