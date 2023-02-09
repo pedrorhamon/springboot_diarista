@@ -1,7 +1,9 @@
 package com.starking.diarista.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,13 +40,15 @@ public class ServicoController {
 	}
 	
 	@PostMapping("/cadastrar")
-	public String cadastrar(@Validated ServicoDTO servicoDto) {
+	public String cadastrar(@Valid @ModelAttribute("form") ServicoDTO servicoDto, BindingResult result) {
+		if(result.hasErrors()) {
+			return "admin/servico/form";
+		}
 		var servico = servicoMapper.toModel(servicoDto);
 		this.servicoRepository.save(servico);
 		return "redirect:/admin/servicos";
 	}
 	
-	@SuppressWarnings("deprecation")
 	@GetMapping("/{id}/editar")
 	public ModelAndView editar(@PathVariable Long id) {
 		var modelAndView = new ModelAndView("admin/servico/form");
@@ -55,7 +59,10 @@ public class ServicoController {
 	}
 	
 	@PostMapping("/{id}/editar")
-	public String editar(@PathVariable Long id, ServicoDTO servicoDTO) {
+	public String editar(@PathVariable @ModelAttribute("form") Long id, ServicoDTO servicoDTO, BindingResult result) {
+		if(result.hasErrors()) {
+			return "admin/servico/form";
+		}
 		var servico = servicoMapper.toModel(servicoDTO);
 		
 		servico.setId(id);

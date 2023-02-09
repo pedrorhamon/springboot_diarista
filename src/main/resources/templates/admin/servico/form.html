@@ -19,6 +19,9 @@
 									<div class="form-group">
 										<label for="nome">Nome:</label>
 										<input class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome" type="text"/>
+										<ul>
+											<li class="text-danger" th:each="erro : ${#fields.errors('nome')}" th:text="${erro}"></li>
+										</ul>
 									</div>
 								</div>
 								
