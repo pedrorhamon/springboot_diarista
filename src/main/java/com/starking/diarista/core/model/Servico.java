@@ -86,6 +86,6 @@ public class Servico implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Icone icone;
 	
-	@Column()
+	@Column
 	private Integer posicao;
 }
