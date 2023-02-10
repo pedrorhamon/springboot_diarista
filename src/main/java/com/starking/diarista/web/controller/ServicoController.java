@@ -59,7 +59,7 @@ public class ServicoController {
 	}
 	
 	@PostMapping("/{id}/editar")
-	public String editar(@PathVariable @ModelAttribute("dto") Long id, ServicoDTO servicoDTO, BindingResult result) {
+	public String editar(@PathVariable @ModelAttribute("form") Long id, ServicoDTO servicoDTO, BindingResult result) {
 		if(result.hasErrors()) {
 			return "admin/servico/form";
 		}
