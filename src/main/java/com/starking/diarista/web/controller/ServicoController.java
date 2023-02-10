@@ -40,7 +40,7 @@ public class ServicoController {
 	}
 	
 	@PostMapping("/cadastrar")
-	public String cadastrar(@Valid @ModelAttribute("form") ServicoDTO servicoDto, BindingResult result) {
+	public String cadastrar(@Valid @ModelAttribute("dto") ServicoDTO servicoDto, BindingResult result) {
 		if(result.hasErrors()) {
 			return "admin/servico/form";
 		}
@@ -59,7 +59,7 @@ public class ServicoController {
 	}
 	
 	@PostMapping("/{id}/editar")
-	public String editar(@PathVariable @ModelAttribute("form") Long id, ServicoDTO servicoDTO, BindingResult result) {
+	public String editar(@PathVariable @ModelAttribute("dto") Long id, ServicoDTO servicoDTO, BindingResult result) {
 		if(result.hasErrors()) {
 			return "admin/servico/form";
 		}

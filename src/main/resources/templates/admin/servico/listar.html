@@ -29,11 +29,11 @@
 										<td>
 											<a 
 												class="btn btn-sm btn-warning"
-												th:href="@{/admin/servicos/{id}/editar (id=${servico.id})}"
+												th:href="@{~/admin/servicos/{id}/editar (id=${servico.id})}"
 												>Editar</a>
 											<a 
 												class="btn btn-sm btn-danger"
-												th:href="@{/admin/servicos/{id}/excluir (id=${servico.id})}"
+												th:href="@{~/admin/servicos/{id}/excluir (id=${servico.id})}"
 												onclick="return confirm('Tem certeza que deseja excluir este serviço?')"
 												>Excluir</a>
 										</td>

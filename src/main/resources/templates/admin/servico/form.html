@@ -207,6 +207,9 @@
 									<div class="form-group">
 										<label for="posicao">Posição</label>
 										<input class="form-control" id="posicao" th:field="*{posicao}" placeholder="Digite um valor" type="number"/>
+										<ul>
+											<li class="text-danger" th:each="erro : ${#fields.errors('posicao')}" th:text="${erro}"></li>
+										</ul>
 									</div>
 								</div>
 							</div>
