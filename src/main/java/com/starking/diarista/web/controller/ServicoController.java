@@ -14,23 +14,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.starking.diarista.core.dtos.ServicoDTO;
 import com.starking.diarista.core.enums.Icone;
-import com.starking.diarista.core.repositories.ServicoRepository;
-import com.starking.diarista.web.mappers.WebServicoMapper;
+import com.starking.diarista.web.service.WebServicoService;
 
 @RestController
 @RequestMapping("/admin/servicos")
 public class ServicoController {
 	
 	@Autowired
-	private ServicoRepository servicoRepository;
-	
-	@Autowired
-	private WebServicoMapper servicoMapper;
+	private WebServicoService servicoService;
 	
 	@GetMapping
 	public ModelAndView buscarTodos() {
 		var modelAndView = new ModelAndView("admin/servico/listar");
-		return modelAndView.addObject("servicos", this.servicoRepository.findAll());
+		return modelAndView.addObject("servicos", this.servicoService.buscarTodos());
 	}
 	
 	@GetMapping("/cadastrar")
@@ -44,8 +40,7 @@ public class ServicoController {
 		if(result.hasErrors()) {
 			return "admin/servico/form";
 		}
-		var servico = servicoMapper.toModel(servicoDto);
-		this.servicoRepository.save(servico);
+		this.servicoService.cadastrar(servicoDto);
 		return "redirect:/admin/servicos";
 	}
 	
@@ -53,9 +48,7 @@ public class ServicoController {
 	public ModelAndView editar(@PathVariable Long id) {
 		var modelAndView = new ModelAndView("admin/servico/form");
 		
-		var servico = this.servicoRepository.getById(id);
-		var dto = servicoMapper.toDTO(servico);
-		return modelAndView.addObject("servico", dto);
+		return modelAndView.addObject("servico", this.servicoService.buscarPorId(id));
 	}
 	
 	@PostMapping("/{id}/editar")
@@ -63,17 +56,14 @@ public class ServicoController {
 		if(result.hasErrors()) {
 			return "admin/servico/form";
 		}
-		var servico = servicoMapper.toModel(servicoDTO);
-		
-		servico.setId(id);
-		this.servicoRepository.save(servico);
+		this.servicoService.editar(servicoDTO, id);
 		
 		return "redirect:/admin/servicos";
 	}
 	
 	@GetMapping("/{id}/excluir")
 	public String excluir(@PathVariable Long id) {
-		this.servicoRepository.deleteById(id);
+		this.servicoService.excluirPorId(id);
 		return "redirect:/admin/servicos";
 	}
 
