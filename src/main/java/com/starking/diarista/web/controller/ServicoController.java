@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.diarista.core.dtos.FlashMessage;
 import com.starking.diarista.core.dtos.ServicoDTO;
 import com.starking.diarista.core.enums.Icone;
 import com.starking.diarista.web.service.WebServicoService;
@@ -36,11 +38,12 @@ public class ServicoController {
 	}
 	
 	@PostMapping("/cadastrar")
-	public String cadastrar(@Valid @ModelAttribute("form") ServicoDTO servicoDto, BindingResult result) {
+	public String cadastrar(@Valid @ModelAttribute("form") ServicoDTO servicoDto, BindingResult result, RedirectAttributes attrs) {
 		if(result.hasErrors()) {
 			return "admin/servico/form";
 		}
 		this.servicoService.cadastrar(servicoDto);
+		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Serviço cadastrado com sucesso!"));
 		return "redirect:/admin/servicos";
 	}
 	
@@ -52,18 +55,19 @@ public class ServicoController {
 	}
 	
 	@PostMapping("/{id}/editar")
-	public String editar(@PathVariable @ModelAttribute("form") Long id, ServicoDTO servicoDTO, BindingResult result) {
+	public String editar(@PathVariable @ModelAttribute("form") Long id, ServicoDTO servicoDTO, BindingResult result, RedirectAttributes attrs) {
 		if(result.hasErrors()) {
 			return "admin/servico/form";
 		}
 		this.servicoService.editar(servicoDTO, id);
-		
+		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Serviço editado com sucesso!"));
 		return "redirect:/admin/servicos";
 	}
 	
 	@GetMapping("/{id}/excluir")
-	public String excluir(@PathVariable Long id) {
+	public String excluir(@PathVariable Long id, RedirectAttributes attrs) {
 		this.servicoService.excluirPorId(id);
+		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Serviço excluido com sucesso!"));
 		return "redirect:/admin/servicos";
 	}
 
