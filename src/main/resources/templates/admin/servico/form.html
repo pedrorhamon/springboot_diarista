@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{adminlte3 :: layout (~{::title}, ~{::main}, _, _)}">
+<html th:replace="~{adminlte3 :: layout (~{::title}, ~{::main}, _, ~{::scripts})}">
 	<head>
 		<title>Formulário de Serviço</title>
 	</head>
@@ -28,7 +28,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="valorMinimo">Valor Minimo:</label>
-										<input class="form-control" id="valorMinimo" th:field="*{valorMinimo}" placeholder="Digite um valor" type="number"/>
+										<input class="form-control money" id="valorMinimo" th:field="*{valorMinimo}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('valorMinimo')}" th:text="${erro}"></li>
 										</ul>
@@ -221,5 +221,13 @@
 				</div>
 			</div>
 		</main>
+		<th:block th:fragment="scripts">
+			<script th:src="@{/webjars/jquery-mask-plugin/dist/jquery.mask.min.js}"></script>
+			<script>
+				$(document).ready(function() {
+					 $('.money').mask('000.000.000.000.000,00', {reverse: true});
+					})
+			</script>
+		</th:block>
 	</body>
 </html>
