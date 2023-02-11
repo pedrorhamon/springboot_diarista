@@ -28,7 +28,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="valorMinimo">Valor Minimo:</label>
-										<input class="form-control money" id="valorMinimo" th:field="*{valorMinimo}" placeholder="Digite um valor" type="text"/>
+										<input class="form-control money2" id="valorMinimo" th:field="*{valorMinimo}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('valorMinimo')}" th:text="${erro}"></li>
 										</ul>
@@ -50,7 +50,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="porcentagemComissao">Porcentagem Comissão:</label>
-										<input class="form-control money" id="porcentagemComissao" th:field="*{porcentagemComissao}" placeholder="Digite um valor" type="text"/>
+										<input class="form-control money2" id="porcentagemComissao" th:field="*{porcentagemComissao}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('porcentagemComissao')}" th:text="${erro}"></li>
 										</ul>
@@ -72,7 +72,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="valorQuarto">Valor Quarto:</label>
-										<input class="form-control money" id="valorQuarto" th:field="*{valorQuarto}" placeholder="Digite um valor" type="text"/>
+										<input class="form-control money2" id="valorQuarto" th:field="*{valorQuarto}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('valorQuarto')}" th:text="${erro}"></li>
 										</ul>
@@ -94,7 +94,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="valorSala">Valor Sala:</label>
-										<input class="form-control money" id="valorSala" th:field="*{valorSala}" placeholder="Digite um valor" type="text"/>
+										<input class="form-control money2" id="valorSala" th:field="*{valorSala}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('valorSala')}" th:text="${erro}"></li>
 										</ul>
@@ -116,7 +116,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="valorBanheiro">Valor Banheiro:</label>
-										<input class="form-control money" id="valorBanheiro" th:field="*{valorBanheiro}" placeholder="Digite um valor" type="text"/>
+										<input class="form-control money2" id="valorBanheiro" th:field="*{valorBanheiro}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('valorBanheiro')}" th:text="${erro}"></li>
 										</ul>
@@ -138,7 +138,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="valorCozinha">Valor Cozinha:</label>
-										<input class="form-control money" id="valorCozinha" th:field="*{valorCozinha}" placeholder="Digite um valor" type="text"/>
+										<input class="form-control money2" id="valorCozinha" th:field="*{valorCozinha}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('valorCozinha')}" th:text="${erro}"></li>
 										</ul>
@@ -160,7 +160,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="valorQuintal">Valor Quintal:</label>
-										<input class="form-control money" id="valorQuintal" th:field="*{valorQuintal}" placeholder="Digite um valor" type="text"/>
+										<input class="form-control money2" id="valorQuintal" th:field="*{valorQuintal}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('valorQuintal')}" th:text="${erro}"></li>
 										</ul>
@@ -182,7 +182,7 @@
 								<div class="col-md-6 col-sm-12">					
 									<div class="form-group">
 										<label for="valorOutros">Valor Outros:</label>
-										<input class="form-control money" id="valorOutros" th:field="*{valorOutros}" placeholder="Digite um valor" type="text"/>
+										<input class="form-control money2" id="valorOutros" th:field="*{valorOutros}" placeholder="Digite um valor" type="text"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('valorOutros')}" th:text="${erro}"></li>
 										</ul>
@@ -225,7 +225,7 @@
 			<script th:src="@{/webjars/jquery-mask-plugin/dist/jquery.mask.min.js}"></script>
 			<script>
 				$(document).ready(function() {
-					 $('.money').mask('000.000.000.000.000,00', {reverse: true});
+					 $('.money2').mask("#.##0,00", {reverse: true});
 					})
 			</script>
 		</th:block>
