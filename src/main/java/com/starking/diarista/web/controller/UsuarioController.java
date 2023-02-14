@@ -17,7 +17,7 @@ public class UsuarioController {
 	
 	@GetMapping
 	public ModelAndView buscarTodos() {
-		var modelAndView = new ModelAndView("admin/usuario/lista");
+		var modelAndView = new ModelAndView("admin/usuario/listar");
 		return modelAndView.addObject("usuarios", this.usuarioService.buscarTodos());
 	}
 }
