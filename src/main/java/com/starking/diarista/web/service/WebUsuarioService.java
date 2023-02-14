@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.starking.diarista.core.dtos.UsuarioDTO;
 import com.starking.diarista.core.model.Usuario;
@@ -24,7 +23,6 @@ public class WebUsuarioService {
 		return this.usuarioRepository.findAll();
 	}
 	
-	@Transactional(readOnly = true)
 	public Usuario cadastrar(UsuarioDTO usuarioDTO) {
 		var model = this.mapper.toModel(usuarioDTO);
 		
