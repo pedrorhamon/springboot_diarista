@@ -1,11 +1,20 @@
 package com.starking.diarista.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.diarista.core.dtos.FlashMessage;
+import com.starking.diarista.core.dtos.UsuarioDTO;
+import com.starking.diarista.core.enums.TipoUsuario;
 import com.starking.diarista.web.service.WebUsuarioService;
 
 @RestController
@@ -19,5 +28,26 @@ public class UsuarioController {
 	public ModelAndView buscarTodos() {
 		var modelAndView = new ModelAndView("admin/usuario/listar");
 		return modelAndView.addObject("usuarios", this.usuarioService.buscarTodos());
+	}
+	
+	@GetMapping("/cadastrar")
+	public ModelAndView cadastrar() {
+		var modelAndView = new ModelAndView("admin/usuario/form");
+		return modelAndView.addObject("usuario", new UsuarioDTO());
+	}
+	
+	@PostMapping("/cadastrar")
+	public String cadastrar(@Valid @ModelAttribute("form") UsuarioDTO usuarioDTO, BindingResult result, RedirectAttributes attrs) {
+		if(result.hasErrors()) {
+			return "admin/usuario/form";
+		}
+		this.usuarioService.cadastrar(usuarioDTO);
+		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuario cadastrado com sucesso!"));
+		return "redirect:/admin/usuarios";
+	}
+	
+	@ModelAttribute("tipoUsuarios")
+	public TipoUsuario[] getTipoUsuario() {
+		return TipoUsuario.values();
 	}
 }
