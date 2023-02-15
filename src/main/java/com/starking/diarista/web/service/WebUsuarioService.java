@@ -36,13 +36,9 @@ public class WebUsuarioService {
 	}
 
 	public Usuario buscarPorId(Long id) {
-		var usuarioEncontrado = this.usuarioRepository.findById(id);
-		if(usuarioEncontrado.isPresent()) {
-			return usuarioEncontrado.get();
-		}
-		
 		var mensagem = String.format("Usuario com ID %d não encontrado", id);
-		throw new UsuarioNaoEncontradoException(mensagem);
+		return this.usuarioRepository.findById(id)
+				.orElseThrow(() -> new UsuarioNaoEncontradoException(mensagem));
 	}
 
 	public Usuario editar(UsuarioDTO usuarioDTO, Long id) {

@@ -60,19 +60,19 @@
 								</div>
 							</div>
 														
-							<div class="row">
-								<div class="col-md-6 col-sm-12">					
-									<div class="form-group">
-										<label for="tipoUsuario">Tipo de Usuario:</label>
-										<select class="form-control" id="tipoUsuario" th:field="*{tipoUsuario}" placeholder="Selecione um tipo" >
-											<option th:each="tipoUsuario : ${tipoUsuarios}" th:text="${tipoUsuario.nome}" th:value="${tipoUsuario}"></option>
-										</select>
-										<ul>
-											<li class="text-danger" th:each="erro : ${#fields.errors('tipoUsuario')}" th:text="${erro}"></li>
-										</ul>
-									</div>
-								</div>
-							</div>
+<!-- 							<div class="row"> -->
+<!-- 								<div class="col-md-6 col-sm-12">					 -->
+<!-- 									<div class="form-group"> -->
+<!-- 										<label for="tipoUsuario">Tipo de Usuario:</label> -->
+<!-- 										<select class="form-control" id="tipoUsuario" th:field="*{tipoUsuario}" placeholder="Selecione um tipo" > -->
+<!-- 											<option th:each="tipoUsuario : ${tipoUsuarios}" th:text="${tipoUsuario.nome}" th:value="${tipoUsuario}"></option> -->
+<!-- 										</select> -->
+<!-- 										<ul> -->
+<!-- 											<li class="text-danger" th:each="erro : ${#fields.errors('tipoUsuario')}" th:text="${erro}"></li> -->
+<!-- 										</ul> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							
 							<button type="submit" class="btn btn-success">Salvar</button>
 						  </form>
