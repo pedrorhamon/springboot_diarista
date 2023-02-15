@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,8 +43,32 @@ public class UsuarioController {
 			return "admin/usuario/form";
 		}
 		this.usuarioService.cadastrar(usuarioDTO);
-		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuario cadastrado com sucesso!"));
+		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário cadastrado com sucesso!"));
 		return "redirect:/admin/usuarios";
+	}
+	
+	@GetMapping("/{id}/editar")
+	public ModelAndView editar(@PathVariable Long id) {
+		var modelAndView = new ModelAndView("admin/usuario/form");
+		
+		return modelAndView.addObject("usuario", this.usuarioService.buscarPorId(id));
+	}
+	
+	@PostMapping("/{id}/editar")
+	public String editar(@PathVariable @ModelAttribute("form") Long id, UsuarioDTO usuario, BindingResult result, RedirectAttributes attrs) {
+		if(result.hasErrors()) {
+			return "admin/servico/form";
+		}
+		this.usuarioService.editar(usuario, id);
+		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário editado com sucesso!"));
+		return "redirect:/admin/servicos";
+	}
+	
+	@GetMapping("/{id}/excluir")
+	public String excluir(@PathVariable Long id, RedirectAttributes attrs) {
+		this.usuarioService.excluirPorId(id);
+		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário excluido com sucesso!"));
+		return "redirect:/admin/servicos";
 	}
 	
 	@ModelAttribute("tipoUsuarios")

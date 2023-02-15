@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.starking.diarista.core.dtos.UsuarioDTO;
 import com.starking.diarista.core.model.Usuario;
 import com.starking.diarista.core.repositories.UsuarioRepository;
+import com.starking.diarista.web.exceptions.UsuarioNaoEncontradoException;
 import com.starking.diarista.web.mappers.WebUsuarioMapper;
 
 @Service
@@ -30,5 +31,29 @@ public class WebUsuarioService {
 		var model = this.mapper.toModel(usuarioDTO);
 		
 		return this.usuarioRepository.save(model);
+	}
+
+	public Usuario buscarPorId(Long id) {
+		var usuarioEncontrado = this.usuarioRepository.findById(id);
+		if(usuarioEncontrado.isPresent()) {
+			return usuarioEncontrado.get();
+		}
+		
+		var mensagem = String.format("Usuario com ID %d não encontrado", id);
+		throw new UsuarioNaoEncontradoException(mensagem);
+	}
+
+	public Usuario editar(UsuarioDTO usuarioDTO, Long id) {
+		var usuarioEncontrado = buscarPorId(id);
+		var model = this.mapper.toModel(usuarioDTO);
+		model.setId(usuarioEncontrado.getId());
+		
+		return this.usuarioRepository.save(model);
+	}
+
+	public void excluirPorId(Long id) {
+		var usuarioEncontrado = buscarPorId(id);
+
+		this.usuarioRepository.delete(usuarioEncontrado);
 	}
 }
