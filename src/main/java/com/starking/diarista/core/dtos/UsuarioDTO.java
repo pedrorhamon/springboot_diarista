@@ -27,6 +27,9 @@ public class UsuarioDTO {
 	private String senha;
 	
 	@NotNull
+	private String confirmaSenha;
+	
+	@NotNull
 	private TipoUsuario tipoUsuario;
 
 }

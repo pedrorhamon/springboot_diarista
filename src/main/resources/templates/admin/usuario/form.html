@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{adminlte3 :: layout (~{::title}, ~{::main}, _, ~{::scripts})}">
+<html th:replace="~{adminlte3 :: layout (~{::title}, ~{::main}, _, _">
 	<head>
 		<title>Formulário de Usuários</title>
 	</head>
@@ -40,7 +40,19 @@
 								<div class="col-md-6 col-sm-12">
 									<div class="form-group">
 										<label for="senha">Senha:</label>
-										<input class="form-control" id="senha" th:field="*{senha}" placeholder="Digite sua senha" type="number"/>
+										<input class="form-control" id="senha" th:field="*{senha}" placeholder="Digite sua senha" type="password"/>
+										<ul>
+											<li class="text-danger" th:each="erro : ${#fields.errors('senha')}" th:text="${erro}"></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">
+									<div class="form-group">
+										<label for="confirmaSenha">Confirmação de Senha:</label>
+										<input class="form-control" id="confirmaSenha" th:field="*{confirmaSenha}" placeholder="Digite sua senha" type="password"/>
 										<ul>
 											<li class="text-danger" th:each="erro : ${#fields.errors('senha')}" th:text="${erro}"></li>
 										</ul>
@@ -69,13 +81,5 @@
 				</div>
 			</div>
 		</main>
-		<th:block th:fragment="scripts">
-			<script th:src="@{/webjars/jquery-mask-plugin/dist/jquery.mask.min.js}"></script>
-			<script>
-				$(document).ready(function() {
-					 $('.money2').mask("#.##0,00", {reverse: true});
-					})
-			</script>
-		</th:block>
 	</body>
 </html>
