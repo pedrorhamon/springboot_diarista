@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.starking.diarista.core.dtos.UsuarioDTO;
+import com.starking.diarista.core.enums.TipoUsuario;
 import com.starking.diarista.core.model.Usuario;
 import com.starking.diarista.core.repositories.UsuarioRepository;
 import com.starking.diarista.web.exceptions.UsuarioNaoEncontradoException;
@@ -29,6 +30,7 @@ public class WebUsuarioService {
 	@Transactional
 	public Usuario cadastrar(UsuarioDTO usuarioDTO) {
 		var model = this.mapper.toModel(usuarioDTO);
+		model.setTipoUsuario(TipoUsuario.ADMIN);
 		
 		return this.usuarioRepository.save(model);
 	}
