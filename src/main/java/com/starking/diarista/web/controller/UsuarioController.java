@@ -57,18 +57,18 @@ public class UsuarioController {
 	@PostMapping("/{id}/editar")
 	public String editar(@PathVariable @ModelAttribute("form") Long id, UsuarioDTO usuario, BindingResult result, RedirectAttributes attrs) {
 		if(result.hasErrors()) {
-			return "admin/servico/form";
+			return "admin/usuario/form";
 		}
 		this.usuarioService.editar(usuario, id);
 		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário editado com sucesso!"));
-		return "redirect:/admin/servicos";
+		return "redirect:/admin/usuarios";
 	}
 	
 	@GetMapping("/{id}/excluir")
 	public String excluir(@PathVariable Long id, RedirectAttributes attrs) {
 		this.usuarioService.excluirPorId(id);
 		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário excluido com sucesso!"));
-		return "redirect:/admin/servicos";
+		return "redirect:/admin/usuarios";
 	}
 	
 	@ModelAttribute("tipoUsuarios")
