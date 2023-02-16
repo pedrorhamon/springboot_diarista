@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starking.diarista.core.dtos.FlashMessage;
 import com.starking.diarista.core.dtos.UsuarioDTO;
+import com.starking.diarista.core.dtos.UsuarioEdicaoDTO;
 import com.starking.diarista.core.enums.TipoUsuario;
 import com.starking.diarista.web.service.WebUsuarioService;
 
@@ -54,15 +55,15 @@ public class UsuarioController {
 		return modelAndView.addObject("usuario", this.usuarioService.editarPorId(id));
 	}
 	
-//	@PostMapping("/{id}/editar")
-//	public String editar(@PathVariable @ModelAttribute("form") Long id, UsuarioDTO usuario, BindingResult result, RedirectAttributes attrs) {
-//		if(result.hasErrors()) {
-//			return "admin/usuario/form";
-//		}
-//		this.usuarioService.editarPorId(usuario, id);
-//		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário editado com sucesso!"));
-//		return "redirect:/admin/usuarios";
-//	}
+	@PostMapping("/{id}/editar")
+	public String editar(@PathVariable @ModelAttribute("form") Long id, UsuarioEdicaoDTO usuario, BindingResult result, RedirectAttributes attrs) {
+		if(result.hasErrors()) {
+			return "admin/usuario/form";
+		}
+		this.usuarioService.editar(usuario, id);
+		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário editado com sucesso!"));
+		return "redirect:/admin/usuarios";
+	}
 	
 	@GetMapping("/{id}/excluir")
 	public String excluir(@PathVariable Long id, RedirectAttributes attrs) {

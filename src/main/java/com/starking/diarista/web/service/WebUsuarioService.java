@@ -46,6 +46,18 @@ public class WebUsuarioService {
 		var usuarioEncontrado = buscarPorId(id);
 		return this.mapper.toDTO(usuarioEncontrado);
 	}
+	
+	public Usuario editar(UsuarioEdicaoDTO dto, Long id) {
+		var usuario = buscarPorId(id);
+		
+		var model = this.mapper.toModel(dto);
+		model.setId(usuario.getId());
+		model.setSenha(usuario.getSenha());
+		model.setTipoUsuario(usuario.getTipoUsuario());
+		
+		return this.usuarioRepository.save(model);
+		
+	}
 
 	public void excluirPorId(Long id) {
 		var usuarioEncontrado = buscarPorId(id);
