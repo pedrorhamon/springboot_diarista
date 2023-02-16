@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.starking.diarista.core.dtos.UsuarioDTO;
+import com.starking.diarista.core.dtos.UsuarioEdicaoDTO;
 import com.starking.diarista.core.enums.TipoUsuario;
 import com.starking.diarista.core.model.Usuario;
 import com.starking.diarista.core.repositories.UsuarioRepository;
@@ -20,7 +21,7 @@ public class WebUsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@Autowired
+	@Autowired(required = false)
 	private WebUsuarioMapper mapper;
 	
 	public List<Usuario> buscarTodos() {
@@ -41,12 +42,9 @@ public class WebUsuarioService {
 				.orElseThrow(() -> new UsuarioNaoEncontradoException(mensagem));
 	}
 
-	public Usuario editar(UsuarioDTO usuarioDTO, Long id) {
+	public UsuarioEdicaoDTO editarPorId(Long id) {
 		var usuarioEncontrado = buscarPorId(id);
-		var model = this.mapper.toModel(usuarioDTO);
-		model.setId(usuarioEncontrado.getId());
-		
-		return this.usuarioRepository.save(model);
+		return this.mapper.toDTO(usuarioEncontrado);
 	}
 
 	public void excluirPorId(Long id) {

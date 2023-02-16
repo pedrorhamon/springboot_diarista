@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html th:replace="~{adminlte3 :: layout (~{::title}, ~{::main}, _, _">
+	<head>
+		<title>Edição de Usuários</title>
+	</head>
+	<body>
+		<main>
+			<div class="row">
+				<div class="col">
+					<div class="card card-primary">
+						<div class="card-header">
+							<div class="card-title">Edição de Usuários</div>
+						</div>
+						<div class="card-body">
+						  <form method="POST" th:object="${edicao}">
+							
+							<div class="row">
+								<div class="col-md-6 col-sm-12">
+									<div class="form-group">
+										<label for="nomeCompleto">Nome Completo:</label>
+										<input class="form-control" id="nomeCompleto" th:field="*{nomeCompleto}" placeholder="Digite seu nome" type="text"/>
+										<ul>
+											<li class="text-danger" th:each="erro : ${#fields.errors('nomeCompleto')}" th:text="${erro}"></li>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-12">					
+									<div class="form-group">
+										<label for="email">E-mail:</label>
+										<input class="form-control" id="email" th:field="*{email}" placeholder="Digite seu email" type="text"/>
+										<ul>
+											<li class="text-danger" th:each="erro : ${#fields.errors('email')}" th:text="${erro}"></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+<!-- 							<div class="row"> -->
+<!-- 								<div class="col-md-6 col-sm-12">					 -->
+<!-- 									<div class="form-group"> -->
+<!-- 										<label for="tipoUsuario">Tipo de Usuario:</label> -->
+<!-- 										<select class="form-control" id="tipoUsuario" th:field="*{tipoUsuario}" placeholder="Selecione um tipo" > -->
+<!-- 											<option th:each="tipoUsuario : ${tipoUsuarios}" th:text="${tipoUsuario.nome}" th:value="${tipoUsuario}"></option> -->
+<!-- 										</select> -->
+<!-- 										<ul> -->
+<!-- 											<li class="text-danger" th:each="erro : ${#fields.errors('tipoUsuario')}" th:text="${erro}"></li> -->
+<!-- 										</ul> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+							
+							<button type="submit" class="btn btn-success">Salvar</button>
+						  </form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
