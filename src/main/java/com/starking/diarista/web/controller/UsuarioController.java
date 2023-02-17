@@ -17,6 +17,7 @@ import com.starking.diarista.core.dtos.FlashMessage;
 import com.starking.diarista.core.dtos.UsuarioDTO;
 import com.starking.diarista.core.dtos.UsuarioEdicaoDTO;
 import com.starking.diarista.core.enums.TipoUsuario;
+import com.starking.diarista.web.exceptions.SenhasNaoConferemException;
 import com.starking.diarista.web.service.WebUsuarioService;
 
 @RestController
@@ -43,8 +44,13 @@ public class UsuarioController {
 		if(result.hasErrors()) {
 			return "admin/usuario/form";
 		}
-		this.usuarioService.cadastrar(usuarioDTO);
-		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário cadastrado com sucesso!"));
+		try {
+			this.usuarioService.cadastrar(usuarioDTO);
+			attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário cadastrado com sucesso!"));
+		}catch(SenhasNaoConferemException e) {
+			result.addError(e.getFieldError());
+			return "admin/usuario/form";
+		}
 		return "redirect:/admin/usuarios";
 	}
 	
