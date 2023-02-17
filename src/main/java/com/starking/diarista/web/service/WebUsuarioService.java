@@ -14,6 +14,7 @@ import com.starking.diarista.core.enums.TipoUsuario;
 import com.starking.diarista.core.model.Usuario;
 import com.starking.diarista.core.repositories.UsuarioRepository;
 import com.starking.diarista.web.exceptions.SenhasNaoConferemException;
+import com.starking.diarista.web.exceptions.UsuarioJaCadastradoException;
 import com.starking.diarista.web.exceptions.UsuarioNaoEncontradoException;
 import com.starking.diarista.web.mappers.WebUsuarioMapper;
 
@@ -31,20 +32,29 @@ public class WebUsuarioService {
 	}
 	
 	@Transactional
-	public Usuario cadastrar(UsuarioDTO usuarioDTO) {
-		var senha = usuarioDTO.getSenha();
-		var confirmaSenha = usuarioDTO.getConfirmaSenha();
+	public Usuario cadastrar(UsuarioDTO dto) {
+		var senha = dto.getSenha();
+		var confirmaSenha = dto.getConfirmaSenha();
 		
 		if(!senha.equals(confirmaSenha)) {
 			var mensagem = "Os dois campos de senha não conferem";
-			var fieldError = new FieldError(usuarioDTO.getClass().getName(), "confirmacaoSenha", usuarioDTO.getConfirmaSenha(), false, null, null, mensagem);
+			var fieldError = new FieldError(dto.getClass().getName(), "confirmacaoSenha", dto.getConfirmaSenha(), false, null, null, mensagem);
 			
 			throw new SenhasNaoConferemException(mensagem, fieldError);
 		}
+		this.usuarioRepository.findByEmail(dto.getEmail()).ifPresent((usuarioEncontrado) -> {
+			if(!usuarioEncontrado.equals(dto)) {
+				var mensagem = "Já existe um usuário cadastrado com esse e-mail";
+				var fieldError = new FieldError(dto.getClass().getName(), "email", dto.getEmail(), false, null, null, mensagem);
+				
+				throw new UsuarioJaCadastradoException(mensagem, fieldError);
+			}
+		});
 		
-		var model = this.mapper.toModel(usuarioDTO);
+		var model = this.mapper.toModel(dto);
 		model.setTipoUsuario(TipoUsuario.ADMIN);
 		
+		validacaoEmail(model);
 		return this.usuarioRepository.save(model);
 	}
 
@@ -67,13 +77,23 @@ public class WebUsuarioService {
 		model.setSenha(usuario.getSenha());
 		model.setTipoUsuario(usuario.getTipoUsuario());
 		
+		validacaoEmail(model);
 		return this.usuarioRepository.save(model);
-		
 	}
 
 	public void excluirPorId(Long id) {
 		var usuarioEncontrado = buscarPorId(id);
-
 		this.usuarioRepository.delete(usuarioEncontrado);
+	}
+	
+	private void validacaoEmail(Usuario usuario) {
+		this.usuarioRepository.findByEmail(usuario.getEmail()).ifPresent((usuarioEncontrado) -> {
+			if(!usuarioEncontrado.equals(usuario)) {
+				var mensagem = "Já existe um usuário cadastrado com esse e-mail";
+				var fieldError = new FieldError(usuario.getClass().getName(), "email", usuario.getEmail(), false, null, null, mensagem);
+				
+				throw new UsuarioJaCadastradoException(mensagem, fieldError);
+			}
+		});
 	}
 }

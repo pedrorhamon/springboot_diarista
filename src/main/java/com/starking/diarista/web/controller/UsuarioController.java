@@ -17,7 +17,7 @@ import com.starking.diarista.core.dtos.FlashMessage;
 import com.starking.diarista.core.dtos.UsuarioDTO;
 import com.starking.diarista.core.dtos.UsuarioEdicaoDTO;
 import com.starking.diarista.core.enums.TipoUsuario;
-import com.starking.diarista.web.exceptions.SenhasNaoConferemException;
+import com.starking.diarista.web.exceptions.ValidacaoException;
 import com.starking.diarista.web.service.WebUsuarioService;
 
 @RestController
@@ -47,7 +47,7 @@ public class UsuarioController {
 		try {
 			this.usuarioService.cadastrar(usuarioDTO);
 			attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário cadastrado com sucesso!"));
-		}catch(SenhasNaoConferemException e) {
+		}catch(ValidacaoException e) {
 			result.addError(e.getFieldError());
 			return "admin/usuario/form";
 		}
@@ -66,8 +66,14 @@ public class UsuarioController {
 		if(result.hasErrors()) {
 			return "admin/usuario/form";
 		}
-		this.usuarioService.editar(usuario, id);
-		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário editado com sucesso!"));
+		
+		try {
+			this.usuarioService.editar(usuario, id);
+			attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário editado com sucesso!"));
+		}catch(ValidacaoException e) {
+			result.addError(e.getFieldError());
+			return "admin/usuario/form";
+		}
 		return "redirect:/admin/usuarios";
 	}
 	
