@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 
@@ -44,9 +45,15 @@ public class WebUsuarioService {
 		}
 		
 		var model = this.mapper.toModel(dto);
+		
+		var passwordEnconder = new BCryptPasswordEncoder();
+		var senhaHash = passwordEnconder.encode(model.getSenha());
+		
+		model.setSenha(senhaHash);
 		model.setTipoUsuario(TipoUsuario.ADMIN);
 		
 		validacaoEmail(model);
+		
 		return this.usuarioRepository.save(model);
 	}
 
