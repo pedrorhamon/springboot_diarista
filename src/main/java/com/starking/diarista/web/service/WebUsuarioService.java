@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 
@@ -14,6 +15,7 @@ import com.starking.diarista.core.dtos.UsuarioEdicaoDTO;
 import com.starking.diarista.core.enums.TipoUsuario;
 import com.starking.diarista.core.model.Usuario;
 import com.starking.diarista.core.repositories.UsuarioRepository;
+import com.starking.diarista.web.config.PasswordEnconderConfig;
 import com.starking.diarista.web.exceptions.SenhasNaoConferemException;
 import com.starking.diarista.web.exceptions.UsuarioJaCadastradoException;
 import com.starking.diarista.web.exceptions.UsuarioNaoEncontradoException;
@@ -27,6 +29,9 @@ public class WebUsuarioService {
 	
 	@Autowired(required = false)
 	private WebUsuarioMapper mapper;
+	
+	@Autowired
+	private PasswordEnconderConfig passwordEnconder;
 	
 	public List<Usuario> buscarTodos() {
 		return this.usuarioRepository.findAll();
@@ -46,8 +51,7 @@ public class WebUsuarioService {
 		
 		var model = this.mapper.toModel(dto);
 		
-		var passwordEnconder = new BCryptPasswordEncoder();
-		var senhaHash = passwordEnconder.encode(model.getSenha());
+		var senhaHash = ((PasswordEncoder) passwordEnconder).encode(model.getSenha());
 		
 		model.setSenha(senhaHash);
 		model.setTipoUsuario(TipoUsuario.ADMIN);
