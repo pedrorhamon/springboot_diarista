@@ -42,14 +42,6 @@ public class WebUsuarioService {
 			
 			throw new SenhasNaoConferemException(mensagem, fieldError);
 		}
-		this.usuarioRepository.findByEmail(dto.getEmail()).ifPresent((usuarioEncontrado) -> {
-			if(!usuarioEncontrado.equals(dto)) {
-				var mensagem = "Já existe um usuário cadastrado com esse e-mail";
-				var fieldError = new FieldError(dto.getClass().getName(), "email", dto.getEmail(), false, null, null, mensagem);
-				
-				throw new UsuarioJaCadastradoException(mensagem, fieldError);
-			}
-		});
 		
 		var model = this.mapper.toModel(dto);
 		model.setTipoUsuario(TipoUsuario.ADMIN);
