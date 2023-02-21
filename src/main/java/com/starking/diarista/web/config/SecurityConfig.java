@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.loginPage("/admin/login")
 		.usernameParameter("email")
 		.usernameParameter("senha")
+		.defaultSuccessUrl("/admin/servicos")
 		.permitAll()
 		.and()
 		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout", "GET"));
