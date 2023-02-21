@@ -26,7 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/admin/**")
 		.hasAuthority(TipoUsuario.ADMIN.toString())
-		.anyRequest().authenticated();
+		.anyRequest().authenticated()
+		.and()
+		.formLogin();
 	}
 
 	@Override
