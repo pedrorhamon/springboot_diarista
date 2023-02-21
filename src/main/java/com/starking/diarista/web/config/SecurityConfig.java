@@ -31,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
+		.loginPage("/admin/login")
+		.permitAll()
 		.and()
 		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout", "GET"));
 	}
@@ -44,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
-		.antMatchers("/webjar/**");
+		.antMatchers("/webjars/**");
 	}
 	
 	

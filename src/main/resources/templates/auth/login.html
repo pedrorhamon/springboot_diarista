@@ -28,9 +28,9 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Entre com suas credenciais para iniciar a seção</p>
 
-      <form method="POST">
+      <form method="POST" th:action="@{/admin/login}">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Username" name="username" required>
+          <input type="text" class="form-control" placeholder="E-mail" name="username" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
