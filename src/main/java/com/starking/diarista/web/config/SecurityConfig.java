@@ -28,7 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.hasAuthority(TipoUsuario.ADMIN.toString())
 		.anyRequest().authenticated()
 		.and()
-		.formLogin();
+		.formLogin()
+		.and()
+		.logout().logoutUrl("/admin/logout");
 	}
 
 	@Override
