@@ -106,7 +106,7 @@ public class UsuarioController {
 			result.addError(e.getFieldError());
 			return "admin/usuario/alterar-senha";
 		}
-		return "redirect:/admin/usuario/alterar-senha";
+		return "redirect:/admin/usuarios/alterar-senha";
 	}
 	
 	@ModelAttribute("tipoUsuarios")
