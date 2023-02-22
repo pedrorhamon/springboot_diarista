@@ -10,12 +10,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 
+import com.starking.diarista.core.dtos.AlterarSenhaDTO;
 import com.starking.diarista.core.dtos.UsuarioDTO;
 import com.starking.diarista.core.dtos.UsuarioEdicaoDTO;
 import com.starking.diarista.core.enums.TipoUsuario;
 import com.starking.diarista.core.model.Usuario;
 import com.starking.diarista.core.repositories.UsuarioRepository;
 import com.starking.diarista.web.config.PasswordEnconderConfig;
+import com.starking.diarista.web.exceptions.SenhasIncorretaException;
 import com.starking.diarista.web.exceptions.SenhasNaoConferemException;
 import com.starking.diarista.web.exceptions.UsuarioJaCadastradoException;
 import com.starking.diarista.web.exceptions.UsuarioNaoEncontradoException;
@@ -32,6 +34,9 @@ public class WebUsuarioService {
 	
 	@Autowired
 	private PasswordEnconderConfig passwordEnconder;
+	
+	@Autowired
+	private BCryptPasswordEncoder enconder;
 	
 	public List<Usuario> buscarTodos() {
 		return this.usuarioRepository.findAll();
@@ -87,6 +92,37 @@ public class WebUsuarioService {
 	public void excluirPorId(Long id) {
 		var usuarioEncontrado = buscarPorId(id);
 		this.usuarioRepository.delete(usuarioEncontrado);
+	}
+	
+	public Usuario buscarPorEmail(String email) {
+		var mensagem = String.format("Usuario com e-mail %d não encontrado", email);
+		return this.usuarioRepository.findByEmail(email)
+				.orElseThrow(() -> new UsuarioNaoEncontradoException(mensagem));
+	}
+	
+	public void alterarSenha(AlterarSenhaDTO dto, String email) {
+		var usuario = buscarPorEmail(email);
+		var senhaAtual = usuario.getSenha();
+		var senhaAntiga = dto.getSenhaAntiga();
+		var senha = dto.getSenha();
+		var confirmaSenha = dto.getConfirmaSenha();
+		
+		if(!senha.equals(confirmaSenha)) {
+			var mensagem = "Os dois campos de senha não conferem";
+			var fieldError = new FieldError(dto.getClass().getName(), "confirmacaoSenha", dto.getConfirmaSenha(), false, null, null, mensagem);
+			
+			throw new SenhasNaoConferemException(mensagem, fieldError);
+		}
+		
+		if(!this.enconder.matches(senhaAntiga, senhaAtual)) {
+			var mensagem = "Senhas não conferem";
+			var fieldError = new FieldError(dto.getClass().getName(), "senhaAntiha", dto.getSenhaAntiga(), false, null, null, mensagem);
+			
+			throw new SenhasIncorretaException(mensagem, fieldError);
+		}
+		var novaSenhaHash = this.enconder.encode(senha);
+		usuario.setSenha(novaSenhaHash);
+		this.usuarioRepository.save(usuario);
 	}
 	
 	private void validacaoEmail(Usuario usuario) {

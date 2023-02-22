@@ -1,5 +1,7 @@
 package com.starking.diarista.web.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starking.diarista.core.dtos.AlterarSenhaDTO;
 import com.starking.diarista.core.dtos.FlashMessage;
 import com.starking.diarista.core.dtos.UsuarioDTO;
 import com.starking.diarista.core.dtos.UsuarioEdicaoDTO;
 import com.starking.diarista.core.enums.TipoUsuario;
+import com.starking.diarista.web.exceptions.SenhasIncorretaException;
 import com.starking.diarista.web.exceptions.ValidacaoException;
 import com.starking.diarista.web.service.WebUsuarioService;
 
@@ -82,6 +86,27 @@ public class UsuarioController {
 		this.usuarioService.excluirPorId(id);
 		attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário excluido com sucesso!"));
 		return "redirect:/admin/usuarios";
+	}
+	
+	@GetMapping("/alterar-senha")
+	public ModelAndView alterarSenha() {
+		var modelAndView = new ModelAndView("/admin/usuario/alterar-senha");
+		return modelAndView.addObject("alterarSenhaDTO", new AlterarSenhaDTO());
+	}
+	
+	@PostMapping("/alterar-senha") 
+	public String alterarSenha(@Valid @ModelAttribute("alterarSenhaDTO") AlterarSenhaDTO dto, BindingResult result, RedirectAttributes attrs, Principal principal) {
+		if(result.hasErrors()) {
+			return "admin/usuario/alterar-senha";
+		}
+		try {
+			this.usuarioService.alterarSenha(dto, principal.getName());
+			attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Senha Alterada com sucesso!"));
+		}catch(ValidacaoException e) {
+			result.addError(e.getFieldError());
+			return "admin/usuario/alterar-senha";
+		}
+		return "redirect:/admin/usuario/alterar-senha";
 	}
 	
 	@ModelAttribute("tipoUsuarios")
