@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.permitAll()
 		.and()
 		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout", "GET"))
-		.and().rememberMe()
+		.and()
+		.rememberMe()
 		.rememberMeParameter("lembrar-me")
 		.tokenValiditySeconds(172800)
 		.key("minhaChaveSecret");
