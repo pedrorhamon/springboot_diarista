@@ -1,6 +1,7 @@
 package com.starking.diarista.web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,6 +23,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Value("${com.starking.diaristas.rememberMe.key}")
+	private String rememberMeKey;
+	
+	@Value("com.starking.diaristas.rememberMe.validitySeconds")
+	private int validitySeconds;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -41,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.rememberMe()
 		.rememberMeParameter("lembrar-me")
-		.tokenValiditySeconds(172800)
-		.key("minhaChaveSecret");
+		.tokenValiditySeconds(validitySeconds)
+		.key(rememberMeKey);
 	}
 
 	@Override
