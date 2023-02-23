@@ -3,7 +3,6 @@ package com.starking.diarista.web.service;
 import java.util.List;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -125,7 +124,7 @@ public class WebUsuarioService {
 	}
 	
 	private void validacaoSenha(IConfirmacaoSenha obj) {
-		var senha = obj.getSenha();
+//		var senha = obj.getSenha();
 		var senhaConfirmacao = obj.getConfirmacaoSenha();
 		
 		if(!obj.equals(senhaConfirmacao)) {
