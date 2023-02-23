@@ -24,10 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@Value("${com.starking.diaristas.rememberMe.key}")
+	@Value("${com.starking.diarista.rememberMe.key}")
 	private String rememberMeKey;
 	
-	@Value("com.starking.diaristas.rememberMe.validitySeconds")
+	@Value("${com.starking.diarista.rememberMe.validitySeconds}")
 	private int validitySeconds;
 
 	@Override
@@ -46,8 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout", "GET"))
-		.logoutSuccessUrl("/admin/login")
-		.and()
+		.logoutSuccessUrl("/admin/login");
+
+		http
 		.rememberMe()
 		.rememberMeParameter("lembrar-me")
 		.tokenValiditySeconds(validitySeconds)
