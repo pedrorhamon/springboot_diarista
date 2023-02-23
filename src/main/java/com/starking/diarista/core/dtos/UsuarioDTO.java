@@ -5,6 +5,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.starking.diarista.web.interfaces.IConfirmacaoSenha;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDTO {
+public class UsuarioDTO implements IConfirmacaoSenha{
 	
 	@NotNull
 	@Size(min = 3, max = 250)
@@ -29,5 +31,7 @@ public class UsuarioDTO {
 	
 	@NotNull
 	@NotEmpty
-	private String confirmaSenha;
+	private String confirmacaoSenha;
+
+
 }

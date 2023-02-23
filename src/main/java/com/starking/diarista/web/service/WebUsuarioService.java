@@ -3,6 +3,7 @@ package com.starking.diarista.web.service;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +22,7 @@ import com.starking.diarista.web.exceptions.SenhasIncorretaException;
 import com.starking.diarista.web.exceptions.SenhasNaoConferemException;
 import com.starking.diarista.web.exceptions.UsuarioJaCadastradoException;
 import com.starking.diarista.web.exceptions.UsuarioNaoEncontradoException;
+import com.starking.diarista.web.interfaces.IConfirmacaoSenha;
 import com.starking.diarista.web.mappers.WebUsuarioMapper;
 
 @Service
@@ -44,15 +46,7 @@ public class WebUsuarioService {
 	
 	@Transactional
 	public Usuario cadastrar(UsuarioDTO dto) {
-		var senha = dto.getSenha();
-		var confirmaSenha = dto.getConfirmaSenha();
-		
-		if(!senha.equals(confirmaSenha)) {
-			var mensagem = "Os dois campos de senha não conferem";
-			var fieldError = new FieldError(dto.getClass().getName(), "confirmacaoSenha", dto.getConfirmaSenha(), false, null, null, mensagem);
-			
-			throw new SenhasNaoConferemException(mensagem, fieldError);
-		}
+		validacaoSenha(dto);
 		
 		var model = this.mapper.toModel(dto);
 		
@@ -105,14 +99,8 @@ public class WebUsuarioService {
 		var senhaAtual = usuario.getSenha();
 		var senhaAntiga = dto.getSenhaAntiga();
 		var senha = dto.getSenha();
-		var confirmaSenha = dto.getConfirmaSenha();
 		
-		if(!senha.equals(confirmaSenha)) {
-			var mensagem = "Os dois campos de senha não conferem";
-			var fieldError = new FieldError(dto.getClass().getName(), "confirmacaoSenha", dto.getConfirmaSenha(), false, null, null, mensagem);
-			
-			throw new SenhasNaoConferemException(mensagem, fieldError);
-		}
+		validacaoSenha(dto);
 		
 		if(!this.enconder.matches(senhaAntiga, senhaAtual)) {
 			var mensagem = "Senhas não conferem";
@@ -134,5 +122,17 @@ public class WebUsuarioService {
 				throw new UsuarioJaCadastradoException(mensagem, fieldError);
 			}
 		});
+	}
+	
+	private void validacaoSenha(IConfirmacaoSenha obj) {
+		var senha = obj.getSenha();
+		var senhaConfirmacao = obj.getConfirmacaoSenha();
+		
+		if(!obj.equals(senhaConfirmacao)) {
+			var mensagem = "Os dois campos de senha não conferem";
+			var fieldError = new FieldError(obj.getClass().getName(), "confirmacaoSenha", obj.getConfirmacaoSenha(), false, null, null, mensagem);
+			
+			throw new SenhasNaoConferemException(mensagem, fieldError);
+		}
 	}
 }

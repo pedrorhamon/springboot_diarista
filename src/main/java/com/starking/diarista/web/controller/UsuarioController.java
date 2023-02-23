@@ -20,7 +20,6 @@ import com.starking.diarista.core.dtos.FlashMessage;
 import com.starking.diarista.core.dtos.UsuarioDTO;
 import com.starking.diarista.core.dtos.UsuarioEdicaoDTO;
 import com.starking.diarista.core.enums.TipoUsuario;
-import com.starking.diarista.web.exceptions.SenhasIncorretaException;
 import com.starking.diarista.web.exceptions.ValidacaoException;
 import com.starking.diarista.web.service.WebUsuarioService;
 
